@@ -1,0 +1,25 @@
+version: "3.2"
+
+services:
+  m1:
+    image: pxc
+    container_name: mysql-1
+    volumes:
+      - mysql_volume1:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:6379"]
+      interval: 1m30s
+      timeout: 10s
+      retries: 3
+    networks:
+      - net_mysql
+
+volumes:
+  mysql_volume1:
+    external: true
+
+networks:
+  net_mysql:
+    external: true
